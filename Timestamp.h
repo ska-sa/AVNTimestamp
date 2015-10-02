@@ -2,6 +2,7 @@
 #ifndef TIMESTAMP_H
 #define TIMESTAMP_H
 
+//System includes
 #ifdef _WIN32
 typedef __int64 int64_t;
 #else
@@ -11,13 +12,18 @@ typedef __int64 int64_t;
 #include <string>
 #include <sstream>
 #include <iomanip>
+#include <cmath>
+#include <cstdio>
+
+//Library includes
+
+//Local includes
 
 namespace AVN
 {
 
-//Return the timestamp as a string.
-//This is the format that is typically used for PXGF and ARD files.
-inline std::string stringFromTimestamp(int64_t i64Timestamp_us)
+//Return the full timestamp as a string.
+static std::string stringFromTimestamp_full(int64_t i64Timestamp_us)
 {
     //make filename from zTime
     time_t ztime = i64Timestamp_us / 1000000;
@@ -34,9 +40,24 @@ inline std::string stringFromTimestamp(int64_t i64Timestamp_us)
     return std::string(caTimeStrB, 26);
 }
 
+//Return the HH:mm:ss timestamp as a string.
+static std::string stringFromTimestamp_HHmmss(int64_t i64Timestamp_us)
+{
+    //make filename from zTime
+    time_t ztime = i64Timestamp_us / 1000000;
+    struct tm* timeInfo;
+    timeInfo = localtime ( &ztime );
+
+    char caTimeStr[10];
+
+    strftime ( caTimeStr, 10, "%H:%M:%S", timeInfo );
+
+    return std::string(caTimeStr, 10);
+}
+
 //This return the time in a similar for except without the date. This is useful for printing the duration
 //output when substract 1 timestamp from another
-inline std::string stringFromTimeDuration(int64_t i64Timestamp_us)
+static std::string stringFromTimeDuration(int64_t i64Timestamp_us)
 {
     int iNMicroSeconds = i64Timestamp_us % 1000000;
     int iNSeconds = (i64Timestamp_us / 1000000) % 60;
@@ -49,25 +70,25 @@ inline std::string stringFromTimeDuration(int64_t i64Timestamp_us)
 
     if(iNDays)
     {
-        iNHours = abs(iNHours);
-        iNMinutes = abs(iNMinutes);
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNHours = std::abs(iNHours);
+        iNMinutes = std::abs(iNMinutes);
+        iNSeconds = std::abs(iNSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
     if(iNHours)
     {
-        iNMinutes = abs(iNMinutes);
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNMinutes = std::abs(iNMinutes);
+        iNSeconds = std::abs(iNSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
     if(iNMinutes)
     {
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNSeconds = std::abs(iNSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
     if(iNSeconds)
     {
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
 
 
@@ -86,7 +107,7 @@ inline std::string stringFromTimeDuration(int64_t i64Timestamp_us)
 }
 
 //This function is same as above except it prints the units explicitly in the string
-inline std::string stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
+static std::string stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
 {
     int iNMicroSeconds = i64Timestamp_us % 1000000;
     int iNSeconds = (i64Timestamp_us / 1000000) % 60;
@@ -99,25 +120,25 @@ inline std::string stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
 
     if(iNDays)
     {
-        iNHours = abs(iNHours);
-        iNMinutes = abs(iNMinutes);
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNHours = std::abs(iNHours);
+        iNMinutes = std::abs(iNMinutes);
+        iNSeconds = std::abs(iNSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
     if(iNHours)
     {
-        iNMinutes = abs(iNMinutes);
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNMinutes = std::abs(iNMinutes);
+        iNSeconds = std::abs(iNSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
     if(iNMinutes)
     {
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNSeconds = std::abs(iNSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
     if(iNSeconds)
     {
-        iNMicroSeconds = abs(iNMicroSeconds);
+        iNMicroSeconds = std::abs(iNMicroSeconds);
     }
 
 
