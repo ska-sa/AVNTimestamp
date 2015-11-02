@@ -62,8 +62,8 @@ static std::string stringFromTimeDuration(int64_t i64Timestamp_us)
     int iNMicroSeconds = i64Timestamp_us % 1000000;
     int iNSeconds = (i64Timestamp_us / 1000000) % 60;
     int iNMinutes = (i64Timestamp_us / 60000000) % 60;
-    int iNHours = (i64Timestamp_us / 3600000000) % 24;
-    int iNDays = (i64Timestamp_us / 3600000000 / 24);
+    int iNHours = (i64Timestamp_us / 3600000000LL) % 24;
+    int iNDays = (i64Timestamp_us / 3600000000LL / 24);
 
     //For negative time duration value all quatities end up as negative in above calculations
     //Only largest none zero quatity should be negative where applicable
@@ -112,8 +112,8 @@ static std::string stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
     int iNMicroSeconds = i64Timestamp_us % 1000000;
     int iNSeconds = (i64Timestamp_us / 1000000) % 60;
     int iNMinutes = (i64Timestamp_us / 60000000) % 60;
-    int iNHours = (i64Timestamp_us / 3600000000) % 24;
-    int iNDays = (i64Timestamp_us / 3600000000 / 24);
+    int iNHours = (i64Timestamp_us / 3600000000LL) % 24;
+    int iNDays = (i64Timestamp_us / 3600000000LL / 24);
 
     //For negative time duration value all quatities end up as negative in above calculations
     //Only largest none zero quatity should be negative where applicable
