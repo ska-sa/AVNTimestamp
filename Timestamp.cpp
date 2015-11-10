@@ -59,35 +59,19 @@ string AVN::stringFromTimeDuration(int64_t i64Timestamp_us)
     int iNMinutes = (i64Timestamp_us / 60000000) % 60;
     int iNHours = (i64Timestamp_us / 3600000000LL) % 24;
     int iNDays = (i64Timestamp_us / 3600000000LL / 24);
+    bool bNegative = i64Timestamp_us < 0;
 
     //For negative time duration value all quatities end up as negative in above calculations
     //Only largest none zero quatity should be negative where applicable
 
-    if(iNDays)
-    {
-        iNHours = abs(iNHours);
-        iNMinutes = abs(iNMinutes);
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
-    }
-    if(iNHours)
-    {
-        iNMinutes = abs(iNMinutes);
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
-    }
-    if(iNMinutes)
-    {
-        iNSeconds = abs(iNSeconds);
-        iNMicroSeconds = abs(iNMicroSeconds);
-    }
-    if(iNSeconds)
-    {
-        iNMicroSeconds = abs(iNMicroSeconds);
-    }
-
+    iNHours = abs(iNHours);
+    iNMinutes = abs(iNMinutes);
+    iNSeconds = abs(iNSeconds);
+    iNMicroSeconds = abs(iNMicroSeconds);
 
     stringstream oSS;
+    if(bNegative)
+        oSS << std::string("-");
     oSS << iNDays;
     oSS << "T";
     oSS << setfill('0') << setw(2) << iNHours;
@@ -109,6 +93,7 @@ string AVN::stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
     int iNMinutes = (i64Timestamp_us / 60000000) % 60;
     int iNHours = (i64Timestamp_us / 3600000000LL) % 24;
     int iNDays = (i64Timestamp_us / 3600000000LL / 24);
+    bool bNegative = i64Timestamp_us < 0;
 
     //For negative time duration value all quatities end up as negative in above calculations
     //Only largest none zero quatity should be negative where applicable
@@ -138,6 +123,9 @@ string AVN::stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
 
 
     stringstream oSS;
+    if(bNegative)
+        oSS << std::string("-");
+
     if(iNDays)
     {
         oSS << iNDays;
