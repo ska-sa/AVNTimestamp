@@ -7,7 +7,9 @@
 
 //Library includes
 #ifdef BOOST_VERSION
+#ifndef Q_MOC_RUN //Qt's MOC and Boost have some issues don't let MOC process boost headers
 #include <boost/date_time/posix_time/posix_time.hpp>
+#endif
 #else
 #include <ctime>
 #endif
@@ -156,7 +158,7 @@ string AVN::stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us)
     return oSS.str();
 }
 
-uint64_t AVN::getTimeNow_us()
+int64_t AVN::getTimeNow_us()
 {
     //If boost is available use its microsecond clock.
     //Otherwise use default ctime API (only returns integer seconds)

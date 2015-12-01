@@ -32,7 +32,7 @@ std::string stringFromTimeDuration(int64_t i64Timestamp_us);
 std::string stringFromTimeDurationExplicitUnits(int64_t i64Timestamp_us);
 
 //Get current time. Uses microsecond clock if boost is available otherwise the <ctime> API with second accuracy
-uint64_t getTimeNow_us();
+int64_t getTimeNow_us();
 
 } // namespace AVN
 
