@@ -31,7 +31,7 @@ string AVN::stringFromTimestamp_full(int64_t i64Timestamp_us)
 
     strftime ( caTimeStrA, 21, "%Y-%m-%dT%H.%M.%S.", timeInfo );
 
-    char caTimeStrB[31];
+    char caTimeStrB[27];
     sprintf(caTimeStrB, "%s%.6llu", caTimeStrA, (long long unsigned int)i64Timestamp_us % 1000000 );
 
     return string(caTimeStrB, 26);
@@ -49,7 +49,25 @@ string AVN::stringFromTimestamp_HHmmss(int64_t i64Timestamp_us)
 
     strftime ( caTimeStr, 10, "%H:%M:%S", timeInfo );
 
-    return string(caTimeStr, 10);
+    return string(caTimeStr, 8);
+}
+
+//Return the HH:mm:ss.uuuuuu timestamp as a string.
+string AVN::stringFromTimestamp_HHmmssuuuuuu(int64_t i64Timestamp_us)
+{
+    //make filename from zTime
+    time_t ztime = i64Timestamp_us / 1000000;
+    struct tm* timeInfo;
+    timeInfo = localtime ( &ztime );
+
+    char caTimeStrA[10];
+
+    strftime ( caTimeStrA, 10, "%H:%M:%S.", timeInfo );
+
+    char caTimeStrB[16];
+    sprintf(caTimeStrB, "%s%.6llu", caTimeStrA, (long long unsigned int)i64Timestamp_us % 1000000 );
+
+    return string(caTimeStrB, 15);
 }
 
 //This return the time in a similar for except without the date. This is useful for printing the duration

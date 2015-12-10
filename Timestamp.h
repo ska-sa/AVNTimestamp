@@ -24,6 +24,9 @@ std::string stringFromTimestamp_full(int64_t i64Timestamp_us);
 //Return the HH:mm:ss timestamp as a string.
 std::string stringFromTimestamp_HHmmss(int64_t i64Timestamp_us);
 
+//Return the HH:mm:ss.uuuuuu timestamp as a string.
+std::string stringFromTimestamp_HHmmssuuuuuu(int64_t i64Timestamp_us);
+
 //This return the time in a similar for except without the date. This is useful for printing the duration
 //output when substract 1 timestamp from another
 std::string stringFromTimeDuration(int64_t i64Timestamp_us);
