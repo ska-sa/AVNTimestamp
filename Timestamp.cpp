@@ -4,9 +4,10 @@
 #include <iomanip>
 #include <cmath>
 #include <cstdio>
+#include <iostream>
 
 //Library includes
-#ifdef BOOST_VERSION
+#ifdef USE_BOOST_TIME //Define this in calling code to get more accurate time if boost is available
 #ifndef Q_MOC_RUN //Qt's MOC and Boost have some issues don't let MOC process boost headers
 #include <boost/date_time/posix_time/posix_time.hpp>
 #endif
@@ -181,7 +182,7 @@ int64_t AVN::getTimeNow_us()
     //If boost is available use its microsecond clock.
     //Otherwise use default ctime API (only returns integer seconds)
 
-#ifdef BOOST_VERSION
+#ifdef USE_BOOST_TIME
     boost::posix_time::ptime oTimeNow = boost::posix_time::microsec_clock::universal_time();
     boost::posix_time::ptime oEpoch = boost::posix_time::time_from_string(string("1970-01-01 00:00:00.000"));
     boost::posix_time::time_duration oDuration = oTimeNow - oEpoch;
