@@ -188,8 +188,9 @@ int64_t AVN::getTimeNow_us()
 
     int64_t i64TimeNow_us = oDuration.total_microseconds();
 #else
-    time_t timeNow;
-    time ( &timeNow );
+    time_t timeNowLocal;
+    time ( &timeNowLocal );
+    struct tm *timeNowUTC = gmtime( &timeNowLocal );
 
     struct tm epoch;
     epoch.tm_hour = 0; //These 3 since midnight
@@ -199,7 +200,7 @@ int64_t AVN::getTimeNow_us()
     epoch.tm_mon = 0; //Months since January
     epoch.tm_mday = 1;  //Day of the month
 
-    int64_t i64TimeNow_us = difftime(timeNow, mktime(&epoch)) * 1000000LL;
+    int64_t i64TimeNow_us = difftime( mktime(timeNowUTC), mktime(&epoch) ) * 1000000LL;
 #endif
 
     return i64TimeNow_us;
